@@ -2,6 +2,40 @@ import os
 import json
 import random
 import datetime as dt
+import requests
+
+def post_to_slack(draft: dict):
+    webhook = os.getenv("SLACK_WEBHOOK_URL")
+    if not webhook:
+        print("SLACK_WEBHOOK_URL not set; skipping Slack post.")
+        return
+
+    caption = draft.get("caption", "")
+    if len(caption) > 2800:
+        caption = caption[:2800] + "\n…(truncated)"
+
+    payload = {
+        "blocks": [
+            {"type": "header", "text": {"type": "plain_text", "text": f"Draft ready — {draft.get('target_date','')}" }},
+            {
+                "type": "section",
+                "fields": [
+                    {"type": "mrkdwn", "text": f"*Top scorer:*\n{draft.get('top_scorer','')}" },
+                    {"type": "mrkdwn", "text": f"*Points:*\n{draft.get('points','')}" },
+                    {"type": "mrkdwn", "text": f"*Game:*\n{draft.get('score_line','')}" },
+                    {"type": "mrkdwn", "text": f"*Image URL:*\n{draft.get('image_url','')}" },
+                ],
+            },
+            {"type": "divider"},
+            {"type": "section", "text": {"type": "mrkdwn", "text": f"*Caption*\n```{caption}```" }},
+        ],
+    }
+
+    r = requests.post(webhook, json=payload, timeout=20)
+    print("Slack status:", r.status_code)
+    if r.status_code >= 300:
+        print("Slack error body:", r.text)
+        
 from dateutil.relativedelta import relativedelta
 
 from nba_api.stats.endpoints import scoreboardv2, boxscoretraditionalv2
