@@ -8,7 +8,7 @@ from nba_api.stats.endpoints import scoreboardv2, boxscoretraditionalv2
 
 
 def get_target_date():
-    today = dt.datetime.utcnow().date()
+    today = dt.datetime.now(dt.timezone.utc).date()
     return today - relativedelta(years=10)
 
 
@@ -25,6 +25,7 @@ def fetch_games(game_date):
 
 def find_top_scorer(game_ids):
     best_player = None
+    best_game_id = None
 
     for gid in game_ids:
         box = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=gid, timeout=60)
@@ -38,8 +39,9 @@ def find_top_scorer(game_ids):
 
         if best_player is None or top["PTS"] > best_player["PTS"]:
             best_player = top
+            best_game_id = gid
 
-    return best_player
+    return best_player, best_game_id
 
 
 def build_caption(game_date, player):
