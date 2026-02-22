@@ -159,6 +159,7 @@ def main():
     draft_output["caption_version"] = "v2-hype-emoji"
     
     print(json.dumps(draft_output, indent=2))
+    post_to_slack(draft_output)
 
 
 if __name__ == "__main__":
