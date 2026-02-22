@@ -98,6 +98,8 @@ def main():
         "caption": caption
     }
 
+    draft_output["caption_version"] = "v2-hype-emoji"
+    
     print(json.dumps(draft_output, indent=2))
 
 
