@@ -81,6 +81,14 @@ def find_top_scorer(game_ids):
 def build_caption(game_date, player):
     date_str = game_date.strftime("%b %d, %Y")
 
+    player_tag = player["PLAYER_NAME"].replace(" ", "")
+    team_tag = player["TEAM_ABBREVIATION"]
+
+    hashtags = f"""
+#{player_tag} #{team_tag}
+#NBAHistory #NBAToday #BasketballStats
+"""
+
     caption = f"""💥 10 YEARS AGO TODAY ({date_str})
 
 {player['PLAYER_NAME']} caught fire.
@@ -95,6 +103,8 @@ This wasn’t just a good night.
 This was peak shot-making.
 
 📚 NBA history — daily stat rewind.
+
+{hashtags}
 """
     return caption
 
