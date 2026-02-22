@@ -47,13 +47,16 @@ def build_caption(game_date, player):
 
     caption = f"""💥 10 years ago today ({date_str})…
 
-🏀 {int(player['PTS'])} PTS — {player['PLAYER_NAME']}
-💪 {int(player['REB'])} REB
-🎁 {int(player['AST'])} AST | 🛡 {int(player['STL'])} STL | 🚫 {int(player['BLK'])} BLK
+{player['PLAYER_NAME']} caught fire.
 
+🏀 {int(player['PTS'])} PTS
 🎯 {int(player['FGM'])}/{int(player['FGA'])} FG
-🎯 {int(player['FG3M'])}/{int(player['FG3A'])} 3PT
-🎯 {int(player['FTM'])}/{int(player['FTA'])} FT
+🎯 {int(player['FG3M'])}/{int(player['FG3A'])} from deep
+🎁 {int(player['AST'])} AST
+🛡 {int(player['STL'])} STL
+
+Peak shot-making.
+Peak takeover mode.
 
 📚 NBA history — daily stat rewind.
 """
