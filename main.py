@@ -103,8 +103,10 @@ def main():
         print("No NBA games found on that date.")
         return
 
-    top_player = find_top_scorer(game_ids)
+    top_player, top_game_id = find_top_scorer(game_ids)
 
+    score_line = get_final_score_line(top_game_id) if top_game_id else None
+    
     if top_player is None:
         print("No player data found.")
         return
@@ -113,12 +115,13 @@ def main():
     image_url = choose_image()
 
     draft_output = {
-        "target_date": str(target_date),
-        "image_url": image_url,
-        "top_scorer": top_player["PLAYER_NAME"],
-        "points": int(top_player["PTS"]),
-        "caption": caption
-    }
+    "target_date": str(target_date),
+    "image_url": image_url,
+    "top_scorer": top_player["PLAYER_NAME"],
+    "points": int(top_player["PTS"]),
+    "score_line": score_line,
+    "caption": caption
+}
 
     draft_output["caption_version"] = "v2-hype-emoji"
     
