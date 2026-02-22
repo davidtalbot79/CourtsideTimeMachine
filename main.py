@@ -73,6 +73,27 @@ def choose_image():
     url_list = [u.strip() for u in urls.split(",")]
     return random.choice(url_list)
 
+def get_final_score_line(game_id):
+    box = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=game_id, timeout=60)
+    teams_df = box.team_stats.get_data_frame()
+
+    # Expect 2 rows: the two teams
+    if teams_df is None or teams_df.empty or len(teams_df) < 2:
+        return None
+
+    t1 = teams_df.iloc[0]
+    t2 = teams_df.iloc[1]
+
+    team1 = t1["TEAM_ABBREVIATION"]
+    team2 = t2["TEAM_ABBREVIATION"]
+    pts1 = int(t1["PTS"])
+    pts2 = int(t2["PTS"])
+
+    # Put winner first
+    if pts2 > pts1:
+        team1, team2, pts1, pts2 = team2, team1, pts2, pts1
+
+    return f"{team1} {pts1} — {team2} {pts2}"
 
 def main():
     target_date = get_target_date()
