@@ -103,8 +103,7 @@ def main():
         print("No NBA games found on that date.")
         return
 
-        top_player, top_game_id = find_top_scorer(game_ids)
-
+    top_player, top_game_id = find_top_scorer(game_ids)
     if top_player is None:
         print("No player data found.")
         return
