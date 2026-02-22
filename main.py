@@ -14,7 +14,7 @@ def get_target_date():
 
 def fetch_games(game_date):
     date_str = game_date.strftime("%m/%d/%Y")
-    scoreboard = scoreboardv2.ScoreboardV2(game_date=date_str)
+    scoreboard = scoreboardv2.ScoreboardV2(game_date=date_str, timeout=60)
     games_df = scoreboard.game_header.get_data_frame()
 
     if games_df.empty:
@@ -27,7 +27,7 @@ def find_top_scorer(game_ids):
     best_player = None
 
     for gid in game_ids:
-        box = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=gid)
+        box = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=gid, timeout=60)
         players_df = box.player_stats.get_data_frame()
 
         if players_df.empty:
