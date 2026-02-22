@@ -45,7 +45,7 @@ def find_top_scorer(game_ids):
 def build_caption(game_date, player):
     date_str = game_date.strftime("%b %d, %Y")
 
-    caption = f"""💥 10 years ago today ({date_str})…
+    caption = f"""💥 10 YEARS AGO TODAY ({date_str})
 
 {player['PLAYER_NAME']} caught fire.
 
@@ -55,12 +55,11 @@ def build_caption(game_date, player):
 🎁 {int(player['AST'])} AST
 🛡 {int(player['STL'])} STL
 
-Peak shot-making.
-Peak takeover mode.
+This wasn’t just a good night.
+This was peak shot-making.
 
 📚 NBA history — daily stat rewind.
 """
-
     return caption
 
 
