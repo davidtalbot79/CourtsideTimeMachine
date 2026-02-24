@@ -191,6 +191,20 @@ def main():
 }
 
     draft_output["caption_version"] = "v2-hype-emoji"
+
+    is_ok, reason = validate_draft(draft_output)
+draft_output["validation_ok"] = is_ok
+draft_output["validation_reason"] = reason
+
+print(json.dumps(draft_output, indent=2))
+
+# Always send to Slack so you see it
+post_to_slack(draft_output)
+
+# Fail-safe: stop here if draft is not valid
+if not is_ok:
+    print("Fail-safe triggered. Not publishing:", reason)
+    return
     
     print(json.dumps(draft_output, indent=2))
     post_to_slack(draft_output)
