@@ -195,26 +195,23 @@ def main():
     image_url = choose_image()
 
     draft_output = {
-    "target_date": str(target_date),
-    "image_url": image_url,
-    "top_scorer": top_player["PLAYER_NAME"],
-    "points": int(top_player["PTS"]),
-    "score_line": score_line,
-    "caption": caption
-}
-
-    draft_output["caption_version"] = "v2-hype-emoji"
+        "target_date": str(target_date),
+        "image_url": image_url,
+        "top_scorer": top_player["PLAYER_NAME"],
+        "points": int(top_player["PTS"]),
+        "score_line": score_line,
+        "caption": caption,
+        "caption_version": "v2-hype-emoji"
+    }
 
     is_ok, reason = validate_draft(draft_output)
-draft_output["validation_ok"] = is_ok
-draft_output["validation_reason"] = reason
+    draft_output["validation_ok"] = is_ok
+    draft_output["validation_reason"] = reason
 
-print(json.dumps(draft_output, indent=2))
+    print(json.dumps(draft_output, indent=2))
 
-# Always send to Slack so you see it
-post_to_slack(draft_output)
+    post_to_slack(draft_output)
 
-# Fail-safe: stop here if draft is not valid
     if not is_ok:
         print("Fail-safe triggered. Not publishing:", reason)
         return
