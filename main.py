@@ -139,6 +139,30 @@ def get_final_score_line(game_id):
 
     return f"{team1} {pts1} — {team2} {pts2}"
 
+def validate_draft(draft: dict) -> tuple[bool, str]:
+    # Required fields
+    required = ["target_date", "top_scorer", "points", "caption", "image_url", "score_line"]
+    for k in required:
+        if not draft.get(k):
+            return False, f"Missing field: {k}"
+
+    # Basic sanity checks
+    if not isinstance(draft["points"], int) or draft["points"] < 10 or draft["points"] > 100:
+        return False, f"Points out of expected range: {draft.get('points')}"
+
+    if len(draft["caption"]) < 50:
+        return False, "Caption too short"
+
+    # Ensure the image URL looks usable (simple check)
+    if not draft["image_url"].startswith("https://"):
+        return False, "Image URL must be https"
+
+    # Ensure score_line has the expected separator
+    if "—" not in draft["score_line"] and "-" not in draft["score_line"]:
+        return False, f"Score line format unexpected: {draft.get('score_line')}"
+
+    return True, "ok"
+
 def main():
     target_date = get_target_date()
     game_ids = fetch_games(target_date)
