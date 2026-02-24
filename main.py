@@ -77,6 +77,20 @@ def find_top_scorer(game_ids):
 
     return best_player, best_game_id
 
+    import random
+
+def get_closing_line():
+    variants = [
+        "This wasn’t just a good night.\nThis was takeover mode.",
+        "Not just buckets.\nA statement performance.",
+        "Peak confidence.\nPeak execution.",
+        "When the rim looked 10 feet wide.",
+        "A reminder of what greatness looks like.",
+        "Different level.\nDifferent aura.",
+        "One of those nights.",
+    ]
+    return random.choice(variants)
+
 
 def build_caption(game_date, player):
     date_str = game_date.strftime("%b %d, %Y")
@@ -99,8 +113,7 @@ def build_caption(game_date, player):
 🎁 {int(player['AST'])} AST
 🛡 {int(player['STL'])} STL
 
-This wasn’t just a good night.
-This was peak shot-making.
+{get_closing_line()}
 
 📚 NBA history — daily stat rewind.
 
