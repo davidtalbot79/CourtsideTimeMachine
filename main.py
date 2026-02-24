@@ -215,9 +215,9 @@ print(json.dumps(draft_output, indent=2))
 post_to_slack(draft_output)
 
 # Fail-safe: stop here if draft is not valid
-if not is_ok:
-    print("Fail-safe triggered. Not publishing:", reason)
-    return
+    if not is_ok:
+        print("Fail-safe triggered. Not publishing:", reason)
+        return
     
     print(json.dumps(draft_output, indent=2))
     post_to_slack(draft_output)
